@@ -24,6 +24,9 @@ shorewall_rules:
     - { action: "Invalid(DROP)", source: net, dest: "$FW", proto: tcp }
     - { action: ACCEPT, source: net, dest: "$FW", proto: tcp, dest_port: ssh }
     - { action: ACCEPT, source: net, dest: "$FW", proto: icmp, dest_port: echo-request }
+    shorewall_custom_rules:
+      github:
+      - { rule: 'ACCEPT', src: 'fw', dst: 'net:github.com', proto: 'tcp', dport: '22,443', comment: 'Allow access to GitHub' }
 
 shorewall_zones:
   - { zone: fw, type: firewall }
@@ -35,7 +38,7 @@ Example Playbook
 
     - hosts: all
       roles:
-         - SphericalElephant.shorewall
+         - ansible-shorewall
 
 License
 -------
@@ -45,5 +48,8 @@ MIT
 Author Information
 ------------------
 
+* Jani Karlsson <jani@karlsson.re> (added EL support, updated for Shorewall5 configs + custom application-specific rules support)
 * Farhad Shahbazi
 * Sascha Biberhofer
+
+Original project: https://github.com/SphericalElephant/ansible-shorewall

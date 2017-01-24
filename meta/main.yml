@@ -1,10 +1,13 @@
 galaxy_info:
-  author: Farhad Shahbazi
+  author: Jani Karlsson & Farhad Shahbazi
   description: Install and configure shorewall
-  company: Spherical Elephant GmbH
   license: MIT
   min_ansible_version: 2.0
   platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
   - name: Ubuntu
     versions:
     - all

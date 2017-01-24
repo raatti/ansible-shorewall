@@ -1,0 +1,2 @@
+shorewall_defaultfile: /etc/sysconfig/shorewall
+shorewall6_defaultfile: /etc/sysconfig/shorewall6

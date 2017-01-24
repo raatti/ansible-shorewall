@@ -1,7 +1,7 @@
 ###############################################################################
 # {{ ansible_managed }}
 #
-#  Shorewall Version 4 -- /etc/shorewall6/shorewall6.conf
+#  Shorewall Version 5 -- /etc/shorewall6/shorewall6.conf
 #
 #  For information about the settings in this file, type "man shorewall6.conf"
 #
@@ -20,6 +20,18 @@ STARTUP_ENABLED=Yes
 VERBOSITY={{ shorewall6_verbosity }}
 
 ###############################################################################
+#			        P A G E R
+###############################################################################
+
+PAGER=
+
+###############################################################################
+#			     F I R E W A L L
+###############################################################################
+
+FIREWALL=
+
+###############################################################################
 #			       L O G G I N G
 ###############################################################################
 
@@ -35,9 +47,9 @@ LOGALLNEW=
 
 LOGFILE=/var/log/messages
 
-LOGFORMAT="Shorewall:%s:%s:"
+LOGFORMAT="%s %s "
 
-LOGLIMIT=
+LOGLIMIT="s:1/sec:10"
 
 LOGTAGONLY=No
 
@@ -116,15 +128,13 @@ ACCOUNTING_TABLE=filter
 
 ADMINISABSENTMINDED=Yes
 
-BASIC_FILTERS=No
-
-IGNOREUNKNOWNVARIABLES=No
-
 AUTOCOMMENT=Yes
 
 AUTOHELPERS=Yes
 
-AUTOMAKE=No
+AUTOMAKE=Yes
+
+BASIC_FILTERS=No
 
 BLACKLIST="NEW,INVALID,UNTRACKED"
 
@@ -154,6 +164,8 @@ FORWARD_CLEAR_MARK=Yes
 
 HELPERS=
 
+IGNOREUNKNOWNVARIABLES=No
+
 IMPLICIT_CONTINUE=No
 
 INLINE_MATCHES=Yes
@@ -163,8 +175,6 @@ IPSET_WARNINGS=Yes
 IP_FORWARDING=Keep
 
 KEEP_RT_TABLES=Yes
-
-LEGACY_FASTSTART=No
 
 LOAD_HELPERS_ONLY=Yes
 
@@ -180,13 +190,15 @@ MODULE_SUFFIX=ko
 
 MUTEX_TIMEOUT=60
 
-OPTIMIZE=0
+OPTIMIZE=All
 
 OPTIMIZE_ACCOUNTING=No
 
 REJECT_ACTION=
 
 REQUIRE_INTERFACE=No
+
+RESTART=reload
 
 RESTORE_ROUTEMARKS=Yes
 
@@ -208,7 +220,13 @@ USE_PHYSICAL_NAMES=No
 
 USE_RT_NAMES=No
 
+VERBOSE_MESSAGES=Yes
+
 WARNOLDCAPVERSION=Yes
+
+WORKAROUNDS=Yes
+
+ZERO_MARKS=No
 
 ZONE2ZONE=-
 
@@ -247,3 +265,5 @@ PROVIDER_OFFSET=
 MASK_BITS=
 
 ZONE_BITS=0
+
+#LAST LINE -- DO NOT REMOVE

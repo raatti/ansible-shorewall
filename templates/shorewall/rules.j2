@@ -1,5 +1,5 @@
 # {{ ansible_managed }}
-# Shorewall version 4 - Rules File
+# Shorewall version 5 - Rules File
 #
 # For information on the settings in this file, type "man shorewall-rules"
 #
@@ -16,4 +16,15 @@
 {{ rule.action | default('-') }} {{ rule.source | default('-') }} {{ rule.dest | default('-') }} {{ rule.proto | default('-') }} {{ rule.dest_port | default('-') }} {{ rule.source_port | default('-') }} {{ rule.original_dest | default('-') }} {{ rule.rate_limit | default('-') }} {{ rule.user_group | default('-') }} {{ rule.mark | default('-') }} {{ rule.connlimit | default('-') }} {{ rule.time | default('-') }} {{ rule.headers | default('-') }} {{ rule.switch | default('-') }} {{ rule.helper | default('-') }}
 {% endfor %}
 
+{% if section.section == "NEW" %}
+{% for nameserver in ansible_dns.nameservers %}
+DNS(ACCEPT)  $FW				     net:{{ nameserver }}			
 {% endfor %}
+{% endif %}
+
+{% endfor %}
+
+{% if shorewall_custom_rules is defined %}
+# Application specific rules
+SHELL cat /etc/shorewall/rules.d/*.rules 2> /dev/null || true
+{% endif %}

@@ -1,5 +1,5 @@
 # {{ ansible_managed }}
-# Shorewall version 4 - Rules File
+# Shorewall version 5 - Rules File
 #
 # For information on the settings in this file, type "man shorewall6-rules"
 #
@@ -17,3 +17,8 @@
 {% endfor %}
 
 {% endfor %}
+
+{% if shorewall6_custom_rules %}
+# Application specific rules
+SHELL cat /etc/shorewall6/rules.d/*.rules 2> /dev/null || true
+{% endif %}

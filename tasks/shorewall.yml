@@ -1,12 +1,12 @@
 ---
 
-- name: install
-  apt: pkg=shorewall
+- name: install shorewall
+  action: "{{ansible_pkg_mgr}} name=shorewall state=present"
   tags: shorewall
 
-- name: /etc/default/shorewall
+- name: Default config
   template:
-    dest: /etc/default/shorewall
+    dest: "{{ shorewall_defaultfile }}"
     src: default/shorewall.j2
     owner: root
     group: root
@@ -31,6 +31,23 @@
     - rules
     - hosts
   notify: restart shorewall
+  tags: shorewall
+
+- name: Create rules.d directory
+  file:
+    dest: "/etc/shorewall/rules.d"
+    state: directory
+    mode: 0750
+    owner: root
+    group: root
+  when: shorewall_custom_rules is defined
+  tags: shorewall
+
+- name: Generate Shorewall custom rules
+  template: src="shorewall/customrules.j2" dest="/etc/shorewall/rules.d/{{ item.key }}.rules"
+  with_dict: '{{ shorewall_custom_rules | default({}) }}'
+  notify: restart shorewall
+  when: shorewall_custom_rules is defined
   tags: shorewall
 
 - name: start and enable the shorewall service

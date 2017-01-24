@@ -1,0 +1,21 @@
+#
+# Shorewall version 5 - Rules File
+#
+# For information on the settings in this file, type "man shorewall-rules"
+#
+# The manpage is also online at
+# http://www.shorewall.net/manpages/shorewall-rules.html
+#
+######################################################################################################################################################################################################
+#ACTION		SOURCE		DEST		PROTO	DEST	SOURCE		ORIGINAL	RATE		USER/	MARK	CONNLIMIT	TIME		HEADERS		SWITCH		HELPER
+#							PORT(S)	PORT(S)		DEST		LIMIT		GROUP
+
+{% if shorewall6_custom_rules is defined and item.key in shorewall6_custom_rules %}
+{% for rule in shorewall6_custom_rules[item.key] %}
+{% if rule.comment is defined %}
+
+# {{ rule.comment }}
+{% endif %}
+{{ rule.rule }}  {{ rule.src }}	     	   {{ rule.dst }} 	{% if rule.proto is defined %}{{ rule.proto }}{% endif %}	{% if rule.dport is defined %}{{ rule.dport }}{% endif %} {% if rule.user is defined %}     -       -       -       {{ rule.user }}{% endif %}
+{% endfor %}
+{% endif %}

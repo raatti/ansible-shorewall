@@ -1,7 +1,7 @@
 ###############################################################################
 # {{ ansible_managed }}
 #
-#  Shorewall Version 4 -- /etc/shorewall/shorewall.conf
+#  Shorewall Version 5 -- /etc/shorewall/shorewall.conf
 #
 #  For information about the settings in this file, type "man shorewall.conf"
 #
@@ -17,6 +17,12 @@ STARTUP_ENABLED=Yes
 ###############################################################################
 
 VERBOSITY={{ shorewall_verbosity }}
+
+###############################################################################
+#			        P A G E R
+###############################################################################
+
+PAGER=
 
 ###############################################################################
 #			       L O G G I N G
@@ -36,11 +42,11 @@ LOGALLNEW=
 
 LOGFILE=/var/log/messages
 
-LOGFORMAT="Shorewall:%s:%s:"
+LOGFORMAT="%s %s "
 
 LOGTAGONLY=No
 
-LOGLIMIT=
+LOGLIMIT="s:1/sec:10"
 
 MACLIST_LOG_LEVEL=info
 
@@ -123,17 +129,15 @@ ADD_SNAT_ALIASES=No
 
 ADMINISABSENTMINDED=Yes
 
-BASIC_FILTERS=No
-
-IGNOREUNKNOWNVARIABLES=No
-
 AUTOCOMMENT=Yes
 
 AUTOHELPERS=Yes
 
 AUTOMAKE=No
 
-BLACKLIST="NEW,INVALID,UNTRACKED"
+BASIC_FILTERS=No
+
+BLACKLIST="NEW,INVALID"
 
 CHAIN_SCRIPTS=Yes
 
@@ -151,6 +155,8 @@ DETECT_DNAT_IPADDRS=No
 
 DISABLE_IPV6=No
 
+DOCKER=No
+
 DONT_LOAD=
 
 DYNAMIC_BLACKLIST=Yes
@@ -165,17 +171,17 @@ FORWARD_CLEAR_MARK=
 
 HELPERS=
 
+IGNOREUNKNOWNVARIABLES=No
+
 IMPLICIT_CONTINUE=No
 
 INLINE_MATCHES=Yes
 
 IPSET_WARNINGS=Yes
 
-IP_FORWARDING=Keep
+IP_FORWARDING=On
 
 KEEP_RT_TABLES=No
-
-LEGACY_FASTSTART=Yes
 
 LOAD_HELPERS_ONLY=Yes
 
@@ -189,6 +195,8 @@ MAPOLDACTIONS=No
 
 MARK_IN_FORWARD_CHAIN=No
 
+MINIUPNPD=No
+
 MODULE_SUFFIX=ko
 
 MULTICAST=No
@@ -197,7 +205,7 @@ MUTEX_TIMEOUT=60
 
 NULL_ROUTE_RFC1918=No
 
-OPTIMIZE=0
+OPTIMIZE=15
 
 OPTIMIZE_ACCOUNTING=No
 
@@ -205,17 +213,19 @@ REJECT_ACTION=
 
 REQUIRE_INTERFACE=No
 
+RESTART=reload
+
 RESTORE_DEFAULT_ROUTE=Yes
 
 RESTORE_ROUTEMARKS=Yes
 
 RETAIN_ALIASES=No
 
-ROUTE_FILTER=Yes
+ROUTE_FILTER=No
 
 SAVE_ARPTABLES=No
 
-SAVE_IPSETS=No
+SAVE_IPSETS=Yes
 
 TC_ENABLED=Internal
 
@@ -227,7 +237,7 @@ TRACK_PROVIDERS=No
 
 TRACK_RULES=No
 
-USE_DEFAULT_RT=Yes
+USE_DEFAULT_RT=No
 
 USE_PHYSICAL_NAMES=No
 
@@ -235,7 +245,9 @@ USE_RT_NAMES=No
 
 WARNOLDCAPVERSION=Yes
 
-ZONE2ZONE=-
+WORKAROUNDS=Yes
+
+ZONE2ZONE=2
 
 ###############################################################################
 #			P A C K E T   D I S P O S I T I O N
@@ -263,19 +275,12 @@ UNTRACKED_DISPOSITION=CONTINUE
 #			P A C K E T  M A R K  L A Y O U T
 ################################################################################
 
-TC_BITS=
+TC_BITS=8
 
-PROVIDER_BITS=
+PROVIDER_BITS=8
 
-PROVIDER_OFFSET=
+PROVIDER_OFFSET=0
 
-MASK_BITS=
+MASK_BITS=8
 
 ZONE_BITS=0
-
-################################################################################
-#			     L E G A C Y  O P T I O N
-#		       D O  N O T  D E L E T E	O R  A L T E R
-################################################################################
-
-IPSECFILE=zones

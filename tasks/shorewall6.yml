@@ -1,12 +1,12 @@
 ---
 
-- name: install
-  apt: pkg=shorewall6
+- name: install shorewall6
+  action: "{{ansible_pkg_mgr}} name=shorewall6 state=present"
   tags: [ 'shorewall', 'shorewall6' ]
 
-- name: /etc/default/shorewall6
+- name: install defaultfile for shorewall6
   template:
-    dest: /etc/default/shorewall6
+    dest: "{{ shorewall6_defaultfile }}"
     src: default/shorewall6.j2
     owner: root
     group: root
@@ -30,6 +30,23 @@
     - policy
     - rules
     - hosts
+  notify: restart shorewall6
+  tags: [ 'shorewall', 'shorewall6' ]
+
+- name: Create rules.d shorewall6 directory
+  file:
+    dest: "/etc/shorewall6/rules.d"
+    state: directory
+    mode: 0750
+    owner: root
+    group: root
+  when: shorewall6_custom_rules is defined
+  tags: [ 'shorewall', 'shorewall6' ]
+
+- name: Generate Shorewall6 custom rules
+  template: src="shorewall6/customrules.j2" dest="/etc/shorewall6/rules.d/{{ item.key }}.rules"
+  with_dict: '{{ shorewall6_custom_rules | default({}) }}'
+  when: shorewall6_custom_rules is defined
   notify: restart shorewall6
   tags: [ 'shorewall', 'shorewall6' ]
 
