@@ -48,7 +48,7 @@ MIT
 Author Information
 ------------------
 
-* Jani Karlsson <jani@karlsson.re> (added EL support, updated for Shorewall5 configs + custom application-specific rules support)
+* Jani Karlsson
 * Farhad Shahbazi
 * Sascha Biberhofer
 
