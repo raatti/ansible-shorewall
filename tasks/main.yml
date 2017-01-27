@@ -2,6 +2,7 @@
 
 - name: include OS specific varibles
   include_vars: "{{ ansible_os_family | default('RedHat') }}.yml"
+  tags: shorewall
 
 - include: shorewall.yml
   when: shorewall == True
